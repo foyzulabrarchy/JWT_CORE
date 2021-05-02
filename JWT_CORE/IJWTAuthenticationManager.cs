@@ -7,6 +7,6 @@ namespace JWT_CORE
 {
     public interface IJWTAuthenticationManager
     {
-
+       // https://dotnetcorecentral.com/blog/authentication-handler-in-asp-net-core/
     }
 }
