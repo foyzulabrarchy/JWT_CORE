@@ -59,7 +59,7 @@ namespace JWT_CORE
                 };
             });
 
-
+            services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey));
 
         }
 

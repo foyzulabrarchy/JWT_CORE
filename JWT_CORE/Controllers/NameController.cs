@@ -1,4 +1,5 @@
 ﻿using JWT_CORE.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,32 @@ namespace JWT_CORE.Controllers
     [ApiController]
     public class NameController : ControllerBase
     {
+        private readonly IJWTAuthenticationManager jWTAuthenticationManager;
+     
+
+        public NameController(IJWTAuthenticationManager jWTAuthenticationManager)
+        {
+            this.jWTAuthenticationManager = jWTAuthenticationManager;
+        }
+
         // GET: api/<NameController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            
             return new string[] { "value1", "value2" };
         }
 
+        [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserDTO userDTO)
+        public IActionResult Authenticate([FromBody] UserDTO user)
         {
-            return Ok();
+             token = jWTAuthenticationManager.Authenticate(user.Mobile, user.Password).ToString();
+
+            if (token == null)
+                return Unauthorized();
+
+            return Ok(token);
         }
 
     }
