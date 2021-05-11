@@ -34,7 +34,7 @@ namespace JWT_CORE.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserDTO user)
         {
-            var token = jWTAuthenticationManager.Authenticate(user.Mobile, user.Password).ToString();
+            var token = jWTAuthenticationManager.Authenticate(user.username, user.Password).ToString();
 
             if (token == null)
                 return Unauthorized();
